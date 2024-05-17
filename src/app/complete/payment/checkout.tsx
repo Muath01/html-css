@@ -31,7 +31,7 @@ function Checkout({ amount }: { amount: string }) {
         ],
         mode: "payment",
         successUrl: `${getSuccessURL()}/complete/chart`,
-        cancelUrl: `${getSuccessURL()}/payment`,
+        cancelUrl: `${getSuccessURL()}/complete/payment`,
       });
 
       if (error) {

@@ -34,7 +34,13 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        {pathname != "/quiz" ? <Header /> : ""}
+        {pathname != "/quiz" ? (
+          <div className="mb-10">
+            <Header />
+          </div>
+        ) : (
+          ""
+        )}
         {children}
       </body>
     </html>
