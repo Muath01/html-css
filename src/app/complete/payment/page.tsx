@@ -48,7 +48,7 @@ function PaymentPage() {
           {/* <StripeContainer amount={status.amount} /> */}
         </div>
       ) : (
-        <div className=" flex flex-col">
+        <div className=" flex flex-col h-screen ">
           {/* <!-- Heading   --> */}
           <div className="mx-auto max-w-7xl bg-white px-4 pt-24 sm:px-6 lg:px-8 select-none  w-full bg-black  ">
             <h2 className="text-3xl font-extrabold text-black sm:text-5xl sm:leading-t igh sm:tracking-tight  ">
@@ -61,10 +61,10 @@ function PaymentPage() {
           </div>
 
           {/* <!-- Pricing Plans   --> */}
-          <div className="relative select-none bg-bl bottom-20 ">
-            {/* <!-- Plans --> */}
-            <div className="grid lg:grid-cols-3 gap-12 lg:gap-8 max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8  border-">
-              <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl">
+          <div className="relative select-none bg-bl  ">
+            <div className="   max-w-7xl mx-auto py-24 px-4 sm:px-6  flex flex-col sm:flex-row  sm:gap-0 sm:space-y-0 sm:space-x-10 space-y-10  justify-center items-center sm:items-stretch">
+              {/* plan 1 */}
+              <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl w-[22rem] sm:w-[25rem]">
                 <h3 className="text-xl font-semibold leading-5 ">Basic</h3>
                 <p className="mt-4 text-slate-700 leading-6 ">
                   Our most basic plan
@@ -101,12 +101,15 @@ function PaymentPage() {
                       productId: "price_1OQUllGFwRQBDdF4f54pbnCb", //test
                     }))
                   }
-                  className="block text-cyan-700 bg-cyan-50 hover:bg-cyan-100 mt-8 px-6 py-4 text-sm font-semibold leading-4  text-center rounded-lg shadow-md no-underline "
+                  className="block  bg-cyan-500 rounded-[5px] hover:bg-cyan-600 mt-8 px-6 py-4 text-sm font-semibold leading-4  text-center  shadow-md no-underline "
                 >
                   Select Plan
                 </a>
               </div>
-              <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl">
+
+              {/* plan 2 */}
+
+              <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl w-[22rem] sm:w-[25rem]">
                 <h3 className="text-xl font-semibold leading-5 ">
                   Professional
                 </h3>
@@ -152,7 +155,7 @@ function PaymentPage() {
                     <div className="text-cyan-500 text-[24px] relative bottom-0">
                       <AiOutlineArrowRight />
                     </div>
-                    <span className="ml-3">PDF Document of hcart</span>
+                    <span className="ml-3">PDF Document of chart</span>
                   </li>
                 </ul>
                 <a
@@ -166,12 +169,14 @@ function PaymentPage() {
                       productId: "price_1OQUl2GFwRQBDdF4N9lSVUcR", //test
                     }))
                   }
-                  className="block text-white bg-cyan-500 hover:bg-cyan-600 mt-8 px-6 py-4 text-sm font-semibold leading-4  text-center rounded-lg shadow-md no-underline"
+                  className="block text-white bg-cyan-500 hover:bg-cyan-600 mt-8 px-6 py-4 text-sm font-semibold leading-4  text-center rounded-[5px] shadow-md no-underline"
                 >
                   Select Plan
                 </a>
               </div>
-              <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl">
+
+              {/* enterprise */}
+              {/* <div className="flex flex-col relative border border-slate-200 shadow-lg p-8 bg-white rounded-2xl">
                 <h3 className="text-xl font-semibold leading-5 ">Enterprise</h3>
                 <p className="mt-4 text-slate-700 leading-6 ">
                   Built for job applications
@@ -215,7 +220,7 @@ function PaymentPage() {
                 >
                   Select Plan
                 </a>
-              </div>
+              </div> */}
             </div>
             {/* <!-- /Plans     --> */}
           </div>

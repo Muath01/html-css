@@ -147,7 +147,7 @@ function Certificate() {
             Print
           </Button>
           <Button
-            onClick={() => sendEmail()}
+            onClick={() => sendEmail("Muath", "Khalifa", 2)}
             className="  text-white rounded-2xl px-10 sm:px-16 py-3 sm:py-4 font-bold bg-orange-500 hover:bg-red-500 text-white-300 "
             size="lg"
           >

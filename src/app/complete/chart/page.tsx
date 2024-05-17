@@ -811,7 +811,7 @@ const BellCurve = ({ amount }: { amount: number }) => {
         <div className="w-full h-4/5 flex justify-center items-center">
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         </div>
-        {productId === "price_1OQUl2GFwRQBDdF4N9lSVUcR" ? ( // testing
+        {/* {productId === "price_1OQUl2GFwRQBDdF4N9lSVUcR" ? ( // testing
           // {productId == "price_1OQUl2GFwRQBDdF4N9lSVUcR" ? ( // production
           <div className=" flex justify-center  ">
             <Button
@@ -827,7 +827,7 @@ const BellCurve = ({ amount }: { amount: number }) => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
     </>
   );
