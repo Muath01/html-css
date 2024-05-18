@@ -2,7 +2,6 @@
 import { EmailTemplate } from "@/components/EmailTemplate";
 import { ReactNode } from "react";
 import { Resend } from "resend";
-import BellCurve from "../complete/chart/page";
 
 const resend = new Resend("re_4BKCu5uX_Lc8VgihresCMVwvBsAED315i");
 
@@ -30,10 +29,6 @@ type emailContentType = {
 };
 
 export default async function sendEmail(options: EmailOptions) {
-  console.log("url: ", options.imageData);
-  console.log("email: ", options.email);
-  console.log("message: ", options.message);
-
   let emailContent: emailContentType = {
     from: options.from || "onboarding@resend.dev",
     to: options.to || "muath.khalifa@yahoo.com",
@@ -41,22 +36,18 @@ export default async function sendEmail(options: EmailOptions) {
   };
 
   // if the type of email we want to send is a certificate, and all information like firstname, second and score are present.
-  if (
-    options.type === "certificate" &&
-    options.firstName &&
-    options.secondName &&
-    options.score !== undefined
-  ) {
-    const reactContent = EmailTemplate({
-      firstName: options.firstName,
-      secondName: options.secondName,
-      score: options.score,
-    });
+  if (options.type === "certificate" && options.score !== undefined) {
     emailContent = {
       ...emailContent,
       // text: `Congratulations ${options.firstName} ${options.secondName}, you scored ${options.score}!`,
       // react: reactContent,
-      html: `<p>Here is the chart:</p><img src="${options.imageData}" />`, // Embed the image data URL in email
+      html: `<p>Congratulations ${options?.firstName || ""} ${
+        options?.secondName || ""
+      },</p>
+      <p>You have achieved a score of ${
+        options?.score
+      } in your recent assessment.</p>
+      <p>Well done on your achievement!</p>`,
     };
 
     // this if for the contactUs page, if all information are present.
@@ -74,8 +65,6 @@ export default async function sendEmail(options: EmailOptions) {
   } else {
     throw new Error("Invalid email options provided");
   }
-
-  console.log("email-Content: ", emailContent);
 
   const { data, error } = await resend.emails.send(emailContent as any); // this is fine, we know what we're getting.
 

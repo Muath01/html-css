@@ -3,14 +3,22 @@ import exporting from "highcharts/modules/exporting";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import bellcurve from "highcharts/modules/histogram-bellcurve";
+import highchartsBellCurve from "highcharts/modules/histogram-bellcurve";
+
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import sendEmail from "@/app/actions/sendEmail";
+import { emailIsSent, upadeteEmailSent } from "../../../../prisma";
 
 // Initialize bell curve module
-bellcurve(Highcharts);
+// bellcurve(Highcharts);
+
+if (typeof Highcharts === "object") {
+  highchartsBellCurve(Highcharts); // Execute the bell curve module
+}
+
 exporting(Highcharts);
 
 // console.log("gotScore: ", userTestScore);
@@ -634,9 +642,7 @@ const User_IQ = calculateIQScore(iqTestScore);
 
 localStorage.setItem("iqScoreFinal", JSON.stringify(User_IQ));
 
-console.log("testScore: ", iqTestScore);
-console.log(`Estimated IQ Score: ${User_IQ}`);
-
+// filter arr and get all the values that are lesser than user iq
 const newarr = data.filter((value) => value < User_IQ);
 
 // round up if percentage is above 1%, don't if it's below
@@ -644,6 +650,7 @@ const percentage = (100 * newarr.length) / data.length;
 const roundedPercentage =
   percentage >= 1 ? Math.round(percentage) : percentage.toFixed(2);
 
+// the component
 const BellCurve = ({ amount }: { amount: number }) => {
   const router = useRouter();
 
@@ -804,24 +811,31 @@ const BellCurve = ({ amount }: { amount: number }) => {
     };
   }, []);
 
-  //   useEffect(() => {
-  //     const canvasElements = document.getElementsByClassName("my-chart");
-  //     if (canvasElements.length > 0) {
-  //         const canvas = canvasElements[0]; // Access the first element
-  //         if (canvas instanceof HTMLCanvasElement) {
-  //             const imageDataUrl = canvas.toDataURL('image/png');
-  //             // Assuming sendEmail is an asynchronous function you've defined
-  //             sendEmail({type: "certificate", imageData: imageDataUrl}).catch(console.error);
-  //         } else {
-  //             console.error('Expected a canvas element, but found something else.');
-  //         }
-  //     } else {
-  //         console.error('No elements found with the class "my-chart".');
-  //     }
-  // }, []);
+  // useEffect(() => {
+
+  // },[])
 
   //   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkEmail = async () => {
+      const userId = localStorage.getItem("userId-qtink-liia") || "none";
+      const emailSent = await emailIsSent(userId);
+
+      console.log("email sent: ", emailSent);
+
+      if (!emailSent) {
+        console.log("Email has been sent");
+        await sendEmail({ type: "certificate", score: 10 }); //
+
+        await upadeteEmailSent(userId);
+      } else {
+        console.log("in the other one ");
+      }
+    };
+
+    checkEmail();
+  }, []);
   return (
     <>
       <div className="h-screen w-full border-2 border-black-500 my-chart  ">

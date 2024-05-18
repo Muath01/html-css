@@ -18,15 +18,62 @@ export async function createUser(email: string, score: number) {
     },
   });
 
-  return user;
+  return user.id;
 }
 
+export async function upadeteEmailSent(userId: string) {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      email_sent: true,
+    },
+  });
+
+  console.log("user: ", user);
+}
 export async function emailIsSent(userId: string) {
+  console.log("hererrrrrrrrrrrrrrrr");
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
     },
+    select: {
+      email_sent: true,
+    },
   });
 
+  if (!user) {
+    console.error("User not found:", userId);
+    return false; // Assuming unpaid if user is not found
+  }
   console.log("user: -> ", user);
+
+  return user.email_sent;
+}
+
+export async function personHasPaid(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      paid: true, // Select only the 'paid' field as that's all you need here
+      score: true,
+    },
+  });
+
+  console.log("user: => >> ", user);
+
+  // Optionally handle the case where the user might not be found
+  if (!user) {
+    console.error("User not found:", userId);
+    return false; // Assuming unpaid if user is not found
+  }
+
+  console.log("user paid status: -> ", user.paid);
+
+  // Since 'user' is guaranteed to be non-null here, return the 'paid' status directly
+  return { paid: user.paid, score: user.score };
 }

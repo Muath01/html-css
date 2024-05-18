@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import LoadingScreen from "react-loading-screen";
 import Checkout from "./checkout";
+import { useRouter, useSearchParams } from "next/navigation";
+import { personHasPaid } from "../../../../prisma";
+
+type PaymentStatusType = false | { paid: boolean; score: number };
+
 function PaymentPage() {
   const [showItem, setShowItem] = useState(false);
+  const [hasPaid, setHasPaid] = useState(false);
+  const [score, setScore] = useState<number>();
   const [status, setStatus] = useState({
     showItem: false,
     amount: 1000,
@@ -13,11 +20,30 @@ function PaymentPage() {
 
   const [loading, setLoading] = useState(false);
 
-  console.log("we on this one");
   const timerId = setTimeout(() => {
     console.log("Aciton exectured after 5 seconds");
     setLoading(() => false);
   }, 5000);
+
+  const searchParams = useSearchParams();
+
+  const query: string = searchParams.get("userid") || "default-id";
+
+  useEffect(() => {
+    const UserHasPaid = async () => {
+      const hasPaid: PaymentStatusType = await personHasPaid(query);
+      console.log("query: ", hasPaid);
+
+      if (hasPaid == false) {
+        setHasPaid(hasPaid);
+      } else {
+        setHasPaid(hasPaid.paid);
+        setScore(hasPaid.score);
+      }
+    };
+
+    UserHasPaid();
+  }, []);
 
   // useEffect(() => {
   //   ReactGA.send({
@@ -48,6 +74,8 @@ function PaymentPage() {
           <Checkout amount={status.productId} />
           {/* <StripeContainer amount={status.amount} /> */}
         </div>
+      ) : hasPaid ? (
+        <div className=" h-screen">{/* <BellCurve amount={30} /> */}</div>
       ) : (
         <div className=" flex flex-col h-screen ">
           {/* <!-- Heading   --> */}

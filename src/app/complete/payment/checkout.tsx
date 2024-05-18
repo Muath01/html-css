@@ -30,7 +30,7 @@ function Checkout({ amount }: { amount: string }) {
           // Add more line items if needed
         ],
         mode: "payment",
-        successUrl: `${getSuccessURL()}/complete/chart`,
+        successUrl: `${getSuccessURL()}/complete/chart/`,
         cancelUrl: `${getSuccessURL()}/complete/payment`,
       });
 

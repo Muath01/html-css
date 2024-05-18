@@ -34,13 +34,31 @@ function formPage() {
 
     const score = Number(testQ);
     console.log("TESTFORMSCRE: ", testQ);
-    const user = await createUser(email, score);
 
-    router.push(`/complete/payment/${user.id}`);
-    localStorage.setItem("userId", user.id);
+    const userLocalStorage = localStorage.getItem("userId-qtink-liia");
+
+    console.log("local storage: ", userLocalStorage);
+
+    // checks if the user has already taken a test. so it doesn't create new user.
+
+    console.log("local storage: ", userLocalStorage);
+    console.log("local storage: ", !userLocalStorage);
+
+    let user;
+
+    if (!userLocalStorage) {
+      console.log("it does not exist");
+      user = await createUser(email, score);
+    } else {
+      console.log("it exist");
+      user = userLocalStorage;
+    }
+
+    router.push(`/complete/payment/?userid=${user}`);
+    // localStorage.setItem("userId-qtink-liia", user.id);
 
     setServerLoading(false);
-    console.log("user =>>> ", user);
+    // console.log("user =>>> ", user);
   }
 
   const timerId = setTimeout(() => {
