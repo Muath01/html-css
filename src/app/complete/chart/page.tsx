@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import sendEmail from "@/app/actions/sendEmail";
 
 // Initialize bell curve module
 bellcurve(Highcharts);
@@ -803,11 +804,27 @@ const BellCurve = ({ amount }: { amount: number }) => {
     };
   }, []);
 
+  //   useEffect(() => {
+  //     const canvasElements = document.getElementsByClassName("my-chart");
+  //     if (canvasElements.length > 0) {
+  //         const canvas = canvasElements[0]; // Access the first element
+  //         if (canvas instanceof HTMLCanvasElement) {
+  //             const imageDataUrl = canvas.toDataURL('image/png');
+  //             // Assuming sendEmail is an asynchronous function you've defined
+  //             sendEmail({type: "certificate", imageData: imageDataUrl}).catch(console.error);
+  //         } else {
+  //             console.error('Expected a canvas element, but found something else.');
+  //         }
+  //     } else {
+  //         console.error('No elements found with the class "my-chart".');
+  //     }
+  // }, []);
+
   //   const navigate = useNavigate();
 
   return (
     <>
-      <div className="h-screen w-full border-2 border-black-500  ">
+      <div className="h-screen w-full border-2 border-black-500 my-chart  ">
         <div className="w-full h-4/5 flex justify-center items-center">
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         </div>

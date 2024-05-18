@@ -30,4 +30,5 @@ model User {
   first_name   String?
   second_name  String?
   score        Int
+  email_sent   Boolean
 }

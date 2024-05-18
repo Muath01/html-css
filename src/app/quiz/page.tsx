@@ -137,19 +137,19 @@ function Test() {
               </h1>
 
               <div className="flex items-center  gap-4 mt-4">
-                <span className="inline-block w-[20px]  h-[20px] bg-blue-400 rounded-full "></span>{" "}
+                <span className="inline-block w-[20px]  h-[20px] bg-orange-500 rounded-full "></span>{" "}
                 <p className="m-0 font-wotfard text-[20px] font-serif">
                   Answer all questions
                 </p>
               </div>
               <div className="flex items-center  gap-4 mt-4">
-                <span className="inline-block w-[20px]  h-[20px] bg-blue-400 rounded-full "></span>{" "}
+                <span className="inline-block w-[20px]  h-[20px] bg-orange-500 rounded-full "></span>{" "}
                 <p className="m-0  text-[20px]  font-serif">
                   There is plenty of time don't rush
                 </p>
               </div>
               <div className="flex items-center  gap-4 mt-4">
-                <span className="inline-block  w-[20px] h-[20px]  bg-blue-400 rounded-full"></span>
+                <span className="inline-block  w-[20px] h-[20px]  bg-orange-500 rounded-full"></span>
                 <p className="m-0  text-[20px]  font-serif">
                   Press "Finish" after answering all questions
                 </p>
@@ -160,7 +160,7 @@ function Test() {
                 setToggle(false);
                 //  navigate("/Test");
               }}
-              className=" bg-blue-400 rounded-[5px]  font-bold py-4 absolute bottom-2  w-[90%] text-white hover:bg-blue-500 text-white-300"
+              className=" bg-orange-500 rounded-[5px]  font-bold py-4 absolute bottom-2  w-[90%] text-white hover:bg-red-600 text-white-300"
             >
               Start
             </button>

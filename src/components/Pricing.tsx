@@ -180,7 +180,7 @@ const Pricing = () => {
                     Start Now!
                   </h5>
                 </div>
-                <button className="py-3 lg:py-4 px-12 lg:px-16 text-white-500 font-semibold rounded-lg bg-orange-500 hover:bg-orange-400 hover:shadow-orange-md transition-all outline-none">
+                <button className="py-3 lg:py-4 px-12 lg:px-16 text-white-500 font-semibold rounded-lg bg-orange-500 hover:bg-red-600 hover:shadow-orange-md transition-all outline-none">
                   start
                 </button>
               </div>

@@ -17,4 +17,16 @@ export async function createUser(email: string, score: number) {
       score,
     },
   });
+
+  return user;
+}
+
+export async function emailIsSent(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  console.log("user: -> ", user);
 }

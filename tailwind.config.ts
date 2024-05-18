@@ -26,6 +26,7 @@ const config = {
         black: {
           500: "#4F5665",
           600: "#0B132A",
+          100: "#000000",
         },
         orange: {
           100: "#FFECEC",
@@ -35,6 +36,7 @@ const config = {
           500: "#2FAB73",
         },
         white: {
+          100: "#FFFFFF",
           300: "#F8F8F8",
           500: "#fff",
         },

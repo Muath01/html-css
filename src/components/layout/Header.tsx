@@ -23,11 +23,11 @@ function Header() {
     <>
       <header
         className={
-          "fixed top-0 w-full  z-30  transition-all  bg-white h-24 mb-10 " +
+          "fixed top-0 w-full  z-30  transition-all  bg-white-500 h-24 mb-10 " +
           (scrollActive ? " shadow-md pt-0" : " pt-4")
         }
       >
-        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
+        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4 bg">
           <h1
             className="text-[50px] text-orange-500 cursor-pointer"
             onClick={() => router.push("/")}
@@ -79,24 +79,6 @@ function Header() {
             </LinkScroll>
             <LinkScroll
               activeClass="active"
-              to="pricing"
-              spy={true}
-              smooth={true}
-              duration={1000}
-              onSetActive={() => {
-                setActiveLink("pricing");
-              }}
-              className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
-                (activeLink === "pricing"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
-              }
-            >
-              Pricing
-            </LinkScroll>
-            <LinkScroll
-              activeClass="active"
               to="testimoni"
               spy={true}
               smooth={true}
@@ -111,8 +93,19 @@ function Header() {
                   : " text-black-500 hover:text-orange-500 ")
               }
             >
-              Testimonial
+              testimonials
             </LinkScroll>
+            <Link
+              href="/contactus"
+              className={
+                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
+                (activeLink === "contact"
+                  ? " text-orange-500 animation-active "
+                  : " text-black-500 hover:text-orange-500 ")
+              }
+            >
+              Contact
+            </Link>
           </ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             <Link

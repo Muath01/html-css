@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import LoadingScreen from "react-loading-screen";
-import Checkout from "./checkout";
+import Checkout from "../checkout";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 function PaymentPage() {
   const [showItem, setShowItem] = useState(false);
   const [status, setStatus] = useState({
@@ -13,11 +14,14 @@ function PaymentPage() {
 
   const [loading, setLoading] = useState(false);
 
-  console.log("we on this one");
   const timerId = setTimeout(() => {
     console.log("Aciton exectured after 5 seconds");
     setLoading(() => false);
   }, 5000);
+
+  const params = useRouter();
+
+  console.log("path: ", params);
 
   // useEffect(() => {
   //   ReactGA.send({
