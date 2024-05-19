@@ -22,7 +22,7 @@ function formPage() {
   const path = useSearchParams();
 
   const [email, setEmail] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [serverLoading, setServerLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -65,6 +65,7 @@ function formPage() {
     const EmailHasBeenSent = async () => {
       const userId = await getUserId();
 
+      console.log("user id: ", userId);
       if (!userId) {
         return;
       }

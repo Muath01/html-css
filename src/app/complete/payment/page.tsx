@@ -20,7 +20,7 @@ function PaymentPage() {
     productId: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const timerId = setTimeout(() => {
     console.log("Aciton exectured after 5 seconds");

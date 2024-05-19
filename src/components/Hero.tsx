@@ -38,7 +38,7 @@ const Hero = ({
         >
           <div className=" flex flex-col justify-center items-start row-start-2 sm:row-start-1">
             <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
-              Welcome to the QTINK IQ Test <strong>LaslesVPN</strong>.
+              Welcome to the <strong>Qtink</strong> Test
             </h1>
             <p className="text-black-500 mt-4 mb-6">
               Discover your cognitive abilities today!

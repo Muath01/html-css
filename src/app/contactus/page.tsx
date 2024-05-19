@@ -6,17 +6,22 @@ function ContactUs() {
   const [fullName, setFullName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const [loading, setLoading] = useState(false);
+
+  console.log("email: ", fullName);
 
   async function handleSendEmail() {
+    setLoading(true);
     try {
       console.log("email: ", email);
-      const response = sendEmail({
+      const response = await sendEmail({
         from: email,
         fullName: fullName,
         email: email,
         to: ["muath.khalifa@yahoo.com"],
         message,
         type: "contact",
+        subject: "Support",
       });
 
       console.log("response = ", response);
@@ -24,6 +29,8 @@ function ContactUs() {
       console.log("error not working");
       console.error(error);
     }
+
+    setLoading(false);
   }
 
   return (
@@ -105,10 +112,11 @@ function ContactUs() {
             </div>
             <div className="w-full p-2">
               <button
+                disabled={loading}
                 onClick={handleSendEmail}
-                className="mx-auto flex rounded border-0 bg-orange-500 py-2 px-8 text-lg text-white hover:bg-red-600 text-white-100 focus:outline-none"
+                className="mx-auto flex rounded border-0 bg-orange-500 py-2 px-8 text-lg text-white hover:bg-red-600 text-white-100 focus:outline-none disabled:bg-gray-400 w-32 items-center justify-center"
               >
-                Send
+                {loading ? "sending..." : "send"}
               </button>
             </div>
 

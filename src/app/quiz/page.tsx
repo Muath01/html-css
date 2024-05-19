@@ -101,12 +101,7 @@ function Test() {
     const testQ = localStorage.getItem("qs4test");
     console.log("TESTFORMSCRE: ", testQ);
     console.log("TOTAL: ", total);
-    // navigate("/form");
 
-    // router.push({
-    //   pathname: "/complete/form",
-    //   query: { score },
-    // });
     router.push("/complete/form");
     console.log(score);
   }
@@ -205,7 +200,7 @@ function Test() {
                     alt="Your Image"
                     className={cn(
                       styling[0] +
-                        "h-full w-full sm:w-full  md:w-[150px]   object-contain md:h-[70%]   md:object-fill    border-[0.1px] border-[#00d0ff] hover:shadow-2xl cursor-pointer bg-red-300 " +
+                        "h-full w-full sm:w-full  md:w-[150px]   object-contain md:h-[70%]   md:object-fill    border-[0.1px] border-[#00d0ff] hover:shadow-2xl cursor-pointer" +
                         (answer.id == questions[currentQuestion].selected
                           ? "  border-4 selected"
                           : "")

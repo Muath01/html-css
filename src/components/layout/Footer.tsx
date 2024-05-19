@@ -4,33 +4,25 @@ import Facebook from "../../../public/assets/Logo.svg";
 import Twitter from "../../../public/assets/Logo.svg";
 import Instagram from "../../../public/assets/Logo.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const Footer = () => {
+  const router = useRouter();
   return (
     <div className="bg-white-300 pt-44 pb-24">
       <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-rows-6 sm:grid-rows-1 grid-flow-row sm:grid-flow-col grid-cols-3 sm:grid-cols-12 gap-4">
         <div className="row-span-2 sm:col-span-4 col-start-1 col-end-4 sm:col-end-5 flex flex-col items-start ">
-          <Image src={LogoVPN} alt="logo" />
+          <h1 className="text-[50px] text-orange-500 cursor-pointer">Qtink</h1>
           <p className="mb-4">
             <strong className="font-medium">Qtink</strong> is an interactive IQ
             test, Please note that the QTINK IQ Test is an online assessment and
             should be taken as a serious measure of intelligence.
           </p>
-          <div className="flex w-full mt-2 mb-8 -mx-2">
-            <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Image src={LogoVPN} alt="logo" />
-            </div>
-            <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Image src={LogoVPN} alt="logo" />
-            </div>
-            <div className="mx-2 bg-white-500 rounded-full items-center justify-center flex p-2 shadow-md">
-              <Image src={LogoVPN} alt="logo" />
-            </div>
-          </div>
-          <p className="text-gray-400">
-            ©{new Date().getFullYear()} - LaslesVPN
-          </p>
+
+          <p className="text-gray-400">©{new Date().getFullYear()} - Qtink</p>
         </div>
-        <div className=" row-span-2 sm:col-span-2 sm:col-start-7 sm:col-end-9 flex flex-col">
+
+        {/* product */}
+        {/* <div className=" row-span-2 sm:col-span-2 sm:col-start-7 sm:col-end-9 flex flex-col">
           <p className="text-black-600 mb-4 font-medium text-lg">Product</p>
           <ul className="text-black-500 ">
             <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
@@ -52,8 +44,10 @@ const Footer = () => {
               Blog{" "}
             </li>
           </ul>
-        </div>
-        <div className="row-span-2 sm:col-span-2 sm:col-start-9 sm:col-end-11 flex flex-col">
+        </div> */}
+
+        {/* engage */}
+        {/* <div className="row-span-2 sm:col-span-2 sm:col-start-9 sm:col-end-11 flex flex-col">
           <p className="text-black-600 mb-4 font-medium text-lg">Engage</p>
           <ul className="text-black-500">
             <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
@@ -78,15 +72,35 @@ const Footer = () => {
               Terms of Service{" "}
             </li>
           </ul>
-        </div>
-        <div className="row-span-2 sm:col-span-2 sm:col-start-11 sm:col-end-13 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Earn Money</p>
+        </div> */}
+
+        {/* Earn */}
+        <div className="row-span-2 sm:col-span-2 sm:col-start-6 sm:col-end-13 flex flex-col">
+          <p className="text-black-600 mb-4 font-medium text-lg">Contact</p>
           <ul className="text-black-500">
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Affiliate{" "}
+            <li
+              onClick={() => {
+                router.push("/contactus");
+              }}
+              className="my-2 hover:text-orange-500 cursor-pointer transition-all"
+            >
+              Contact Us
             </li>
-            <li className="my-2 hover:text-orange-500 cursor-pointer transition-all">
-              Become Partner{" "}
+            <li
+              onClick={() => {
+                router.push("/terms");
+              }}
+              className="my-2 hover:text-orange-500 cursor-pointer transition-all"
+            >
+              Terms of Service
+            </li>
+            <li
+              onClick={() => {
+                router.push("/terms/privacy");
+              }}
+              className="my-2 hover:text-orange-500 cursor-pointer transition-all"
+            >
+              Privacy
             </li>
           </ul>
         </div>

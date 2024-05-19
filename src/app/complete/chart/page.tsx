@@ -917,8 +917,8 @@ const BellCurve = ({ amount }: { amount: number }) => {
   }, []);
   return (
     <>
-      <div className="h-screen w-full border-2 border-black-500 my-chart  ">
-        <div className="w-full h-4/5 flex justify-center items-center">
+      <div className="h-screen w-full  my-chart  ">
+        <div className="w-full h-4/5 flex justify-center items-center  mt-20 sm:mt-0">
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         </div>
         {/* {productId === "price_1OQUl2GFwRQBDdF4N9lSVUcR" ? ( // testing

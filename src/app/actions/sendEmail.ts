@@ -30,7 +30,7 @@ type emailContentType = {
 
 export default async function sendEmail(options: EmailOptions) {
   let emailContent: emailContentType = {
-    from: options.from || "onboarding@resend.dev",
+    from: "onboarding@resend.dev",
     to: options.to || "muath.khalifa@yahoo.com",
     subject: options.subject || "No Subject",
   };
