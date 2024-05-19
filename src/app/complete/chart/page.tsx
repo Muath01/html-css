@@ -10,7 +10,45 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import sendEmail from "@/app/actions/sendEmail";
-import { emailIsSent, upadeteEmailSent } from "../../../../prisma";
+import {
+  emailIsSent,
+  upadeteEmailSent,
+  updateUserPaid,
+} from "../../../../prisma";
+import { title } from "process";
+
+interface Title {
+  text: string;
+  margin?: number; // 'margin' is optional
+}
+
+interface Axis {
+  title: Title;
+  alignTicks: boolean;
+  visible: boolean;
+  opposite?: boolean; // 'opposite' is optional
+}
+
+interface ChartOptions {
+  chart: {
+    height: number;
+    width: number;
+    type: string;
+    spacingBottom: number;
+    spacingTop: number;
+    spacingLeft: number;
+    spacingRight: number;
+  };
+  title: {
+    text: string;
+    style: {
+      fontSize: number;
+      fontWeight: string;
+    };
+  };
+  xAxis: Axis[];
+  // Define other properties as necessary...
+}
 
 // Initialize bell curve module
 // bellcurve(Highcharts);
@@ -615,51 +653,86 @@ const testScoreMax = 20;
 const iqScoreMin = Math.min(...data);
 const iqScoreMax = 128;
 
-// Function to map test score to IQ score
-export function calculateIQScore(testScore: any) {
-  // Ensure the test score is within the valid range
-  const normalizedTestScore = Math.max(
-    testScoreMin,
-    Math.min(testScoreMax, testScore)
-  );
-
-  // Calculate the normalized position of the test score within the range
-  const position =
-    (normalizedTestScore - testScoreMin) / (testScoreMax - testScoreMin);
-
-  // Map the normalized position to the IQ score range
-  const iqScore = iqScoreMin + position * (iqScoreMax - iqScoreMin);
-
-  return iqScore;
-}
-
-const score = localStorage.getItem("qs4test");
-const userTestScore = Number(score);
-
-// Example: Calculate IQ score for a test score of 10
-const iqTestScore = userTestScore;
-const User_IQ = calculateIQScore(iqTestScore);
-
-localStorage.setItem("iqScoreFinal", JSON.stringify(User_IQ));
-
-// filter arr and get all the values that are lesser than user iq
-const newarr = data.filter((value) => value < User_IQ);
-
-// round up if percentage is above 1%, don't if it's below
-const percentage = (100 * newarr.length) / data.length;
-const roundedPercentage =
-  percentage >= 1 ? Math.round(percentage) : percentage.toFixed(2);
-
 // the component
 const BellCurve = ({ amount }: { amount: number }) => {
   const router = useRouter();
-
+  const [User_IQ, setUserIQ] = useState<number>(2);
   const [chartWidth, setChartWidth] = useState(600); //default
+  const [roundedPercentage, setRoundedPercentage] = useState<string | number>();
+  const [newArr, setNewArr] = useState<number[]>();
+
+  // Function to map test score to IQ score
+  function calculateIQScore(testScore: any) {
+    // Ensure the test score is within the valid range
+    const normalizedTestScore = Math.max(
+      testScoreMin,
+      Math.min(testScoreMax, testScore)
+    );
+
+    // Calculate the normalized position of the test score within the range
+    const position =
+      (normalizedTestScore - testScoreMin) / (testScoreMax - testScoreMin);
+
+    // Map the normalized position to the IQ score range
+    const iqScore = iqScoreMin + position * (iqScoreMax - iqScoreMin);
+
+    return iqScore;
+  }
+
+  useEffect(() => {
+    const getScore = localStorage.getItem("qs4test");
+    const userTestScore = Number(getScore);
+
+    const score = calculateIQScore(userTestScore);
+
+    console.log("score: ", score);
+
+    setUserIQ(20);
+
+    const tempChartOptions = { ...chartOptions };
+
+    localStorage.setItem("iqScoreFinal", JSON.stringify(score));
+
+    // filter arr and get all the values that are lesser than user iq
+    const newarrx = data.filter((value) => value < score);
+    setNewArr(newarrx);
+
+    // round up if percentage is above 1%, don't if it's below
+    const percentage = (100 * newarrx.length) / data.length;
+    //prettier-ignore
+    const roundedPercentagex = percentage >= 1 ? Math.round(percentage) : percentage.toFixed(2);
+    setRoundedPercentage(roundedPercentagex);
+
+    setChartOptions((prevOptions: any) => ({
+      ...prevOptions,
+      title: {
+        ...prevOptions.title,
+        text: "your IQ is " + score,
+      },
+      xAxis: prevOptions.xAxis.map((axis: any, index: number) => {
+        if (index === 1) {
+          return {
+            ...axis,
+            title: {
+              ...axis.title,
+              text:
+                "<h1>Your IQ is in the top " +
+                roundedPercentagex +
+                " percentile <br> In a room of 1000 people you would be smarter than " +
+                Math.round((1000 * (newarrx?.length || 0)) / data.length) +
+                " of them </h1>",
+            },
+          };
+        }
+        return axis;
+      }),
+    }));
+  }, []);
 
   let productIdString = localStorage.getItem("productId")!;
   let productId: string = JSON.parse(productIdString);
 
-  const [chartOptions, setChartOptions] = useState(() => {
+  const [chartOptions, setChartOptions] = useState<any>(() => {
     const screenWidth = window.innerWidth;
     let initialWidth;
     if (screenWidth < 400) {
@@ -718,7 +791,7 @@ const BellCurve = ({ amount }: { amount: number }) => {
               "<h1>Your IQ is in the top " +
               roundedPercentage +
               "% <br> In a room of 1000 people you would be smarter than " +
-              Math.round((1000 * newarr.length) / data.length) +
+              Math.round((1000 * (newArr?.length || 0)) / data.length) +
               " of them </h1>",
           },
           alignTicks: false,
@@ -795,7 +868,7 @@ const BellCurve = ({ amount }: { amount: number }) => {
         console.log("xl");
         newWidth = 700;
       }
-      setChartOptions((prevOptions) => ({
+      setChartOptions((prevOptions: any) => ({
         ...prevOptions,
         chart: {
           ...prevOptions.chart,
@@ -821,6 +894,7 @@ const BellCurve = ({ amount }: { amount: number }) => {
     const checkEmail = async () => {
       const userId = localStorage.getItem("userId-qtink-liia") || "none";
       const emailSent = await emailIsSent(userId);
+      const userHasPaid = await updateUserPaid(userId);
 
       console.log("email sent: ", emailSent);
 

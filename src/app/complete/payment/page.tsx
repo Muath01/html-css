@@ -5,12 +5,14 @@ import LoadingScreen from "react-loading-screen";
 import Checkout from "./checkout";
 import { useRouter, useSearchParams } from "next/navigation";
 import { personHasPaid } from "../../../../prisma";
+import BellCurve from "../chart/page";
 
 type PaymentStatusType = false | { paid: boolean; score: number };
 
 function PaymentPage() {
+  const router = useRouter();
   const [showItem, setShowItem] = useState(false);
-  const [hasPaid, setHasPaid] = useState(false);
+  const [hasPaid, setHasPaid] = useState<boolean>();
   const [score, setScore] = useState<number>();
   const [status, setStatus] = useState({
     showItem: false,
@@ -39,6 +41,7 @@ function PaymentPage() {
       } else {
         setHasPaid(hasPaid.paid);
         setScore(hasPaid.score);
+        router.push("/complete/chart");
       }
     };
 
@@ -75,7 +78,10 @@ function PaymentPage() {
           {/* <StripeContainer amount={status.amount} /> */}
         </div>
       ) : hasPaid ? (
-        <div className=" h-screen">{/* <BellCurve amount={30} /> */}</div>
+        () => {
+          console.log("haspaid: ", hasPaid);
+          router.push("/complete/chart");
+        }
       ) : (
         <div className=" flex flex-col h-screen ">
           {/* <!-- Heading   --> */}

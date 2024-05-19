@@ -53,6 +53,25 @@ export async function emailIsSent(userId: string) {
   return user.email_sent;
 }
 
+// function to update that the user has paid.
+
+export async function updateUserPaid(userId: string) {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        paid: true,
+      },
+    });
+
+    console.log("user paid => ", user);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function personHasPaid(userId: string) {
   const user = await prisma.user.findUnique({
     where: {
