@@ -36,8 +36,10 @@ function PaymentPage() {
       const hasPaid: PaymentStatusType = await personHasPaid(query);
       console.log("query: ", hasPaid);
 
-      if (hasPaid == false) {
-        setHasPaid(hasPaid);
+      if (!hasPaid) {
+        return;
+      } else if (!hasPaid.paid) {
+        setHasPaid(false);
       } else {
         setHasPaid(hasPaid.paid);
         setScore(hasPaid.score);

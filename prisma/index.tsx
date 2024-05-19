@@ -18,6 +18,8 @@ export async function createUser(email: string, score: number) {
     },
   });
 
+  console.log("created: ", user);
+
   return user.id;
 }
 
@@ -33,8 +35,11 @@ export async function upadeteEmailSent(userId: string) {
 
   console.log("user: ", user);
 }
+
+// returns is a boolean stating whethere an emailhas been sent to this user or not.
+
 export async function emailIsSent(userId: string) {
-  console.log("hererrrrrrrrrrrrrrrr");
+  console.log("hererrrrrrrrrrrrrrrr: ", userId);
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -73,6 +78,7 @@ export async function updateUserPaid(userId: string) {
 }
 
 export async function personHasPaid(userId: string) {
+  console.log("erorr here: ", userId);
   const user = await prisma.user.findUnique({
     where: {
       id: userId,

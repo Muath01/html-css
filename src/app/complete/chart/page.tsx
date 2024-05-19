@@ -893,6 +893,11 @@ const BellCurve = ({ amount }: { amount: number }) => {
   useEffect(() => {
     const checkEmail = async () => {
       const userId = localStorage.getItem("userId-qtink-liia") || "none";
+
+      if (userId == "none") {
+        return;
+      }
+
       const emailSent = await emailIsSent(userId);
       const userHasPaid = await updateUserPaid(userId);
 

@@ -13,14 +13,14 @@ import LoadingScreen from "react-loading-screen";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import React, { useState } from "react";
-import { createUser } from "../../../../prisma";
+import React, { useEffect, useState } from "react";
+import { createUser, emailIsSent } from "../../../../prisma";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getUserId } from "@/lib/getUserId";
 
 function formPage() {
   const path = useSearchParams();
 
-  const score = localStorage.getItem("qs4test");
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [serverLoading, setServerLoading] = useState<boolean>(false);
@@ -49,17 +49,34 @@ function formPage() {
     if (!userLocalStorage) {
       console.log("it does not exist");
       user = await createUser(email, score);
+      localStorage.setItem("userId-qtink-liia", user);
     } else {
       console.log("it exist");
       user = userLocalStorage;
     }
 
     router.push(`/complete/payment/?userid=${user}`);
-    // localStorage.setItem("userId-qtink-liia", user.id);
 
     setServerLoading(false);
     // console.log("user =>>> ", user);
   }
+
+  useEffect(() => {
+    const EmailHasBeenSent = async () => {
+      const userId = await getUserId();
+
+      if (!userId) {
+        return;
+      }
+      const emailHasBennSent = await emailIsSent(userId);
+      console.log("check : ", emailHasBennSent);
+      if (emailHasBennSent) {
+        router.push(`/complete/payment/?userid=${userId}`);
+      }
+    };
+
+    EmailHasBeenSent();
+  }, []);
 
   const timerId = setTimeout(() => {
     console.log("Aciton exectured after 5 seconds");
