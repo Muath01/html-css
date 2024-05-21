@@ -2,11 +2,15 @@ import React from "react";
 import { useCountdown } from "../../../lib/hooks/useCountDown";
 import { useRouter } from "next/navigation";
 
-function Clock({ target }: { target: number }) {
+type ClockType = {
+  target: number;
+  calculateScore: () => void;
+};
+function Clock({ target, calculateScore }: ClockType) {
   const [minutes, seconds] = useCountdown(target);
   const router = useRouter();
   if (minutes == 0 && seconds == 0) {
-    router.push("/form");
+    calculateScore();
   }
   return (
     <div className="">

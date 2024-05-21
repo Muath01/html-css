@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import one1 from "../../data/questions/question-1.png";
 // import { questions as questionsList } from "../../data/questions";
 import { questions as questionsList } from "../../data/questions";
@@ -115,11 +115,14 @@ function Test() {
     setStyling([...styling]);
   }
 
-  const mins = 60 * 20 * 1000;
+  const mins = 60 * 0.1 * 1000;
   const NOW_IN_MS = new Date().getTime();
-
+  const [time, setTime] = useState<number>(0);
   //20 minutes
-  const time = NOW_IN_MS + mins;
+  useEffect(() => {
+    const timeLength = NOW_IN_MS + mins;
+    setTime(timeLength);
+  }, []);
 
   return (
     <>
@@ -164,7 +167,7 @@ function Test() {
       ) : (
         <div className="  select-none ">
           <div className=" h-40 flex justify-center items-center relative text-[62px] font-bold md:absolute left-3 md:top-3 mr-1">
-            <Clock target={time} />
+            <Clock calculateScore={calculateScore} target={time} />
           </div>
 
           <div className="grid grid-rows-2 md:grid-rows-1 grid-cols-1 items-start gap-0  relative bottom-5 md:bottom-0  top-5 ">
