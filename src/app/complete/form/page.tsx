@@ -37,34 +37,48 @@ function MyForm() {
   console.log("path: ", router);
 
   async function sendUserData() {
-    setServerLoading(true);
-    const testQ = localStorage.getItem("qs4test");
+    try {
+      setServerLoading(true); // turn the submit button to grey
+      const testQ = localStorage.getItem("qs4test"); // get the IQ score from the local storage.
 
-    const score = Number(testQ);
-    console.log("TESTFORMSCRE: ", testQ);
+      if (!testQ) {
+        console.error("No test score found in localStorage");
+        setServerLoading(false);
+        return;
+      }
 
-    const userLocalStorage = localStorage.getItem("userId-qtink-liia");
+      const score = Number(testQ); // turn local storage item to a number
+      console.log("TESTFORMSCRE: ", testQ);
 
-    console.log("local storage: ", userLocalStorage);
+      const userLocalStorage = localStorage.getItem("userId-qtink-liia"); // get the UserId of the person who completed the test. This may not exist.
 
-    // checks if the user has already taken a test. so it doesn't create new user.
+      console.log("local storage: ", userLocalStorage);
 
-    console.log("local storage: ", userLocalStorage);
-    console.log("local storage: ", !userLocalStorage);
+      // checks if the user has already taken a test. so it doesn't create new user.
 
-    let user;
+      console.log("local storage: ", userLocalStorage);
+      console.log("local storage: ", !userLocalStorage);
 
-    if (!userLocalStorage) {
-      console.log("it does not exist");
-      user = await createUser(email, score);
-      localStorage.setItem("userId-qtink-liia", user);
-    } else {
-      console.log("it exist");
-      user = userLocalStorage;
+      let user;
+
+      if (!userLocalStorage) {
+        console.log("it does not exist");
+        user = await createUser(email, score);
+        if (!user) {
+          console.error("Failed to create user");
+          setServerLoading(false);
+          return;
+        }
+        localStorage.setItem("userId-qtink-liia", user); // set user ID if it exist
+      } else {
+        console.log("it exist");
+        user = userLocalStorage;
+      }
+
+      router.push(`/complete/payment/?userid=${user}`);
+    } catch (error) {
+      console.error(error);
     }
-
-    router.push(`/complete/payment/?userid=${user}`);
-
     setServerLoading(false);
     // console.log("user =>>> ", user);
   }
