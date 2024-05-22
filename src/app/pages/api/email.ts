@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     to: ["muath.khalifa@yahoo.com"],
     subject: "Hello world",
     text: "Muath but test",
-    react: EmailTemplate({ firstName: "Muath" }),
+    // react: EmailTemplate({ firstName: "Muath" }),
   });
 
   if (error) {

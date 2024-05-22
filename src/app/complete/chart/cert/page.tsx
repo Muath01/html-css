@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { dateFormat } from "highcharts";
 import logo from "../images/logo.png";
 import Image from "next/image";
@@ -20,17 +20,22 @@ function Certificate() {
 
   const formattedDate = `${day}-${month}-${year}`;
 
-  const getFullName = localStorage.getItem("qtinkName")!;
-  const parseFullName: ParseFullNameType = JSON.parse(getFullName);
+  const [IQScore, setIQScore] = useState<number>();
+  const [fullName, setFullName] = useState<string>();
 
-  const fullName = parseFullName.firstName + " " + parseFullName.secondName;
-  console.log("parseD: ", parseFullName);
-  console.log("fullName", fullName);
-
-  const iqScore = localStorage.getItem("iqScoreFinal");
   function handlePrint() {
     window.print();
   }
+
+  useEffect(() => {
+    const getFullName = localStorage.getItem("qtinkName")!;
+    const parseFullName: ParseFullNameType = JSON.parse(getFullName);
+    const iqScore = localStorage.getItem("iqScoreFinal");
+    const fullName = parseFullName.firstName + " " + parseFullName.secondName;
+
+    setFullName(fullName);
+    setIQScore(Number(iqScore));
+  }, []);
 
   // async function sendEmail() {
   //   try {
@@ -87,7 +92,7 @@ function Certificate() {
                       Certificate of Completion
                     </h1>
                     <br />
-                    <h2 className="sm:text-[28px] text-[20px]  pr-10 relative w-[85%] sm:w-full ">
+                    {/* <h2 className="sm:text-[28px] text-[20px]  pr-10 relative w-[85%] sm:w-full ">
                       Congratulations{" "}
                       {parseFullName.firstName && parseFullName.secondName ? (
                         <span>: {fullName}</span>
@@ -99,10 +104,10 @@ function Certificate() {
                         <span>: {parseFullName.secondName}</span>
                       ) : null}
                       <span> {}</span>
-                    </h2>
+                    </h2> */}
                     <br />
                     <h2 className="sm:text-[28px] text-[20px]  pr-10 relative w-[85%] sm:w-full   ">
-                      IQ Score: <span className="">{iqScore}</span>
+                      IQ Score: <span className="">{IQScore}</span>
                       <span> {}</span>
                     </h2>
                   </div>
@@ -142,14 +147,14 @@ function Certificate() {
             id="printButton"
             onClick={handlePrint}
             className=" bg-gray-600 text-white rounded-2xl px-10 sm:px-16 py-3 sm:py-4 font-bold hover:bg-gray-700 text-white-300 "
-            size="lg"
+            // size="lg"
           >
             Print
           </Button>
           <Button
-            onClick={() => sendEmail("Muath", "Khalifa", 2)}
+            // onClick={() => sendEmail("Muath", "Khalifa", 2)}
             className="  text-white rounded-2xl px-10 sm:px-16 py-3 sm:py-4 font-bold bg-orange-500 hover:bg-red-500 text-white-300 "
-            size="lg"
+            // size="lg"
           >
             email it to me
           </Button>

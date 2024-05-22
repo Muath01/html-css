@@ -13,12 +13,20 @@ import LoadingScreen from "react-loading-screen";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { createUser, emailIsSent } from "../../../../prisma";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getUserId } from "@/lib/getUserId";
 
-function formPage() {
+function FormPage() {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <MyForm />
+    </Suspense>
+  );
+}
+
+function MyForm() {
   const path = useSearchParams();
 
   const [email, setEmail] = useState<string>("");
@@ -85,60 +93,62 @@ function formPage() {
   }, 5000);
 
   return (
-    <div className="h-screen flex items-center justify-center ">
-      {loading ? (
-        <div className="">
-          <LoadingScreen
-            loading={true}
-            bgColor="rgba(255,255,255,1)"
-            spinnerColor="#9ee5f8"
-            textColor="#676767"
-            logoSrc=""
-            text="Test Complete"
-            className="bg-black border-2 border-black"
-          >
-            {" "}
-          </LoadingScreen>
-        </div>
-      ) : (
-        <Card className="w-[350px] rounded-[10px] border border-black-500">
-          <CardHeader>
-            <CardTitle>Complete!</CardTitle>
-            <CardDescription>
-              Where would you like your results to be sent?
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Email:</Label>
-                  <Input
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                    className="rounded-[5px]"
-                    id="name"
-                    placeholder="your-email@gmail.com"
-                  />
-                </div>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              onClick={sendUserData}
-              disabled={serverLoading}
-              className="bg-orange-500 rounded-[10px] hover:bg-orange-600 disabled:bg-gray-900  w-24 text-white-100"
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="h-screen flex items-center justify-center ">
+        {loading ? (
+          <div className="">
+            <LoadingScreen
+              loading={true}
+              bgColor="rgba(255,255,255,1)"
+              spinnerColor="#9ee5f8"
+              textColor="#676767"
+              logoSrc=""
+              text="Test Complete"
+              className="bg-black border-2 border-black"
             >
-              {serverLoading ? "Loading..." : "Finish"}
-            </Button>
-          </CardFooter>
-        </Card>
-      )}
-    </div>
+              {" "}
+            </LoadingScreen>
+          </div>
+        ) : (
+          <Card className="w-[350px] rounded-[10px] border border-black-500">
+            <CardHeader>
+              <CardTitle>Complete!</CardTitle>
+              <CardDescription>
+                Where would you like your results to be sent?
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form>
+                <div className="grid w-full items-center gap-4">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="name">Email:</Label>
+                    <Input
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      className="rounded-[5px]"
+                      id="name"
+                      placeholder="your-email@gmail.com"
+                    />
+                  </div>
+                </div>
+              </form>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button
+                onClick={sendUserData}
+                disabled={serverLoading}
+                className="bg-orange-500 rounded-[10px] hover:bg-orange-600 disabled:bg-gray-900  w-24 text-white-100"
+              >
+                {serverLoading ? "Loading..." : "Finish"}
+              </Button>
+            </CardFooter>
+          </Card>
+        )}
+      </div>
+    </Suspense>
   );
 }
 
-export default formPage;
+export default FormPage;

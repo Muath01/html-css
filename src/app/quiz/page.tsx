@@ -88,7 +88,7 @@ function Test() {
     }
   };
 
-  function calculateScore(e: any) {
+  function calculateScore() {
     const total = questions.reduce((acc, question) => {
       return question.selected === question.isCorrect ? acc + 1 : acc;
     }, 0);
@@ -143,13 +143,13 @@ function Test() {
               <div className="flex items-center  gap-4 mt-4">
                 <span className="inline-block w-[20px]  h-[20px] bg-orange-500 rounded-full "></span>{" "}
                 <p className="m-0  text-[20px]  font-serif">
-                  There is plenty of time don't rush
+                  There is plenty of time don&apos;t rush
                 </p>
               </div>
               <div className="flex items-center  gap-4 mt-4">
                 <span className="inline-block  w-[20px] h-[20px]  bg-orange-500 rounded-full"></span>
                 <p className="m-0  text-[20px]  font-serif">
-                  Press "Finish" after answering all questions
+                  Press &quot;Finish&quot; after answering all questions
                 </p>
               </div>
             </div>
@@ -194,8 +194,9 @@ function Test() {
               </h1>
 
               <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-6 grid-cols-3 relative bottom-8 cursor-pointer 2xl:md:max-w-[1200px]  md:max-w-[1000px] w-full h-[15rem] gap-2  mt-4 justify-self-center items-center md:items-start row-span-2">
-                {questions[currentQuestion].answers.map((answer) => (
+                {questions[currentQuestion].answers.map((answer, index) => (
                   <Image
+                    key={index}
                     onClick={(e) =>
                       answerSelection(e, questions[currentQuestion], answer)
                     }
@@ -233,7 +234,7 @@ function Test() {
                   Next
                 </button>
                 <button
-                  onClick={(e) => calculateScore(e)}
+                  onClick={calculateScore}
                   className="text-white-300 cursor-pointer text-[16px] font-[120px] flex items-center justify-center w-28 xl:px-[80px] text-white  border-none rounded-[5px]  transition duration-400 ease bg-[#0d6dfd] hover:bg-[#0d6dfd90]"
                 >
                   Finish

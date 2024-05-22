@@ -47,8 +47,8 @@ function Testmonial() {
           Read trusted reviews from our customers
         </h2> */}
       <div className="mt-8 [column-fill:_balance] sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-8 ">
-        {reviews.map((review) => (
-          <div className="mb-8 sm:break-inside-avoid">
+        {reviews.map((review, index) => (
+          <div key={index} className="mb-8 sm:break-inside-avoid">
             <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
               <div className="flex items-center gap-4">
                 <img

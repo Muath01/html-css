@@ -57,7 +57,7 @@ if (typeof Highcharts === "object") {
   highchartsBellCurve(Highcharts); // Execute the bell curve module
 }
 
-exporting(Highcharts);
+// exporting(Highcharts);
 
 // console.log("gotScore: ", userTestScore);
 const data = [
@@ -654,7 +654,7 @@ const iqScoreMin = Math.min(...data);
 const iqScoreMax = 128;
 
 // the component
-const BellCurve = ({ amount }: { amount: number }) => {
+const BellCurve = () => {
   const router = useRouter();
   const [User_IQ, setUserIQ] = useState<number>(2);
   const [chartWidth, setChartWidth] = useState(600); //default
@@ -729,131 +729,136 @@ const BellCurve = ({ amount }: { amount: number }) => {
     }));
   }, []);
 
-  let productIdString = localStorage.getItem("productId")!;
-  let productId: string = JSON.parse(productIdString);
+  // let productIdString = localStorage.getItem("productId")!;
+  // let productId: string = JSON.parse(productIdString);
 
-  const [chartOptions, setChartOptions] = useState<any>(() => {
-    const screenWidth = window.innerWidth;
-    let initialWidth;
-    if (screenWidth < 400) {
-      initialWidth = 300;
-    } else if (screenWidth < 600) {
-      initialWidth = 400;
-    } else if (screenWidth < 800) {
-      initialWidth = 600;
-    } else {
-      initialWidth = 700;
-    }
+  const [chartOptions, setChartOptions] = useState<any>();
 
-    return {
-      chart: {
-        height: 400,
-        width: initialWidth,
-        type: "line",
-        spacingBottom: 50,
-        spacingTop: 10,
-        spacingLeft: 0,
-        spacingRight: 0,
-      },
+  useEffect(() => {
+    setChartOptions(() => {
+      const screenWidth = window !== undefined ? window.innerWidth : 400;
+      let initialWidth;
+      if (screenWidth < 400) {
+        initialWidth = 300;
+      } else if (screenWidth < 600) {
+        initialWidth = 400;
+      } else if (screenWidth < 800) {
+        initialWidth = 600;
+      } else {
+        initialWidth = 700;
+      }
 
-      title: {
-        text: "your IQ is " + User_IQ,
-        style: {
-          fontSize: 30,
-          fontWeight: "bolder",
+      return {
+        chart: {
+          height: 400,
+          width: initialWidth,
+          type: "line",
+          spacingBottom: 50,
+          spacingTop: 10,
+          spacingLeft: 0,
+          spacingRight: 0,
         },
-      },
 
-      plotOptions: {
-        bellcurve: {
-          sizeFactor: 0.5,
-          lineWidth: 2,
-          color: "red",
-        },
-      },
-
-      legend: {
-        enabled: false,
-      },
-
-      xAxis: [
-        {
-          title: {
-            text: "Data",
+        title: {
+          text: "your IQ is " + User_IQ,
+          style: {
+            fontSize: 30,
+            fontWeight: "bolder",
           },
-          alignTicks: false,
-          visible: false,
         },
-        {
-          title: {
-            margin: 20,
-            text:
-              "<h1>Your IQ is in the top " +
-              roundedPercentage +
-              "% <br> In a room of 1000 people you would be smarter than " +
-              Math.round((1000 * (newArr?.length || 0)) / data.length) +
-              " of them </h1>",
+
+        plotOptions: {
+          bellcurve: {
+            sizeFactor: 0.5,
+            lineWidth: 2,
+            color: "red",
           },
-          alignTicks: false,
-          opposite: false,
         },
-      ],
 
-      yAxis: [
-        {
-          title: { text: "Data" },
-          visible: false,
+        legend: {
+          enabled: false,
         },
-        {
-          title: { text: "Bell curve" },
-          opposite: false,
-          visible: false,
-        },
-      ],
 
-      series: [
-        {
-          name: "Bell curve",
-          type: "bellcurve",
-          xAxis: 1,
-          // yAxis: 1,
-          baseSeries: 1,
-          // zIndex: -1,
-
-          zoneAxis: "x",
-          zones: [
-            {
-              value: User_IQ,
-              color: "rgb(255, 0, 0, 0.55)",
-              fillColor: "rgb(255, 0, 0, 0.25)",
+        xAxis: [
+          {
+            title: {
+              text: "Data",
             },
-            {
-              color: "rgb(255, 0, 0, 0.55)",
-              fillColor: "white",
-            },
-          ],
-        },
-
-        {
-          name: "Data",
-          type: "scatter",
-          data: data,
-          visible: false,
-          accessibility: {
-            exposeAsGroupOnly: true,
+            alignTicks: false,
+            visible: false,
           },
-          marker: {},
+          {
+            title: {
+              margin: 20,
+              text:
+                "<h1>Your IQ is in the top " +
+                roundedPercentage +
+                "% <br> In a room of 1000 people you would be smarter than " +
+                Math.round((1000 * (newArr?.length || 0)) / data.length) +
+                " of them </h1>",
+            },
+            alignTicks: false,
+            opposite: false,
+          },
+        ],
+
+        yAxis: [
+          {
+            title: { text: "Data" },
+            visible: false,
+          },
+          {
+            title: { text: "Bell curve" },
+            opposite: false,
+            visible: false,
+          },
+        ],
+
+        series: [
+          {
+            name: "Bell curve",
+            type: "bellcurve",
+            xAxis: 1,
+            // yAxis: 1,
+            baseSeries: 1,
+            // zIndex: -1,
+
+            zoneAxis: "x",
+            zones: [
+              {
+                value: User_IQ,
+                color: "rgb(255, 0, 0, 0.55)",
+                fillColor: "rgb(255, 0, 0, 0.25)",
+              },
+              {
+                color: "rgb(255, 0, 0, 0.55)",
+                fillColor: "white",
+              },
+            ],
+          },
+
+          {
+            name: "Data",
+            type: "scatter",
+            data: data,
+            visible: false,
+            accessibility: {
+              exposeAsGroupOnly: true,
+            },
+            marker: {},
+          },
+        ],
+        exporting: {
+          enabled: true,
         },
-      ],
-      exporting: {
-        enabled: true,
-      },
-    };
-  });
+      };
+    });
+  }, []);
 
   useEffect(() => {
     const updateChartWidth = () => {
-      const screenWidth = window.innerWidth;
+      const screenWidth = window !== undefined ? window.innerWidth : 400;
+
       let newWidth: number;
       if (screenWidth < 400) {
         newWidth = 300;
@@ -877,10 +882,14 @@ const BellCurve = ({ amount }: { amount: number }) => {
       }));
     };
 
-    window.addEventListener("resize", updateChartWidth);
+    if (window !== undefined) {
+      window.addEventListener("resize", updateChartWidth);
+    }
 
     return () => {
-      window.removeEventListener("resize", updateChartWidth);
+      if (window !== undefined) {
+        window.removeEventListener("resize", updateChartWidth);
+      }
     };
   }, []);
 

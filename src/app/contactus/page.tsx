@@ -42,7 +42,7 @@ function ContactUs() {
           </h1>
           <p className="mx-auto text-base leading-relaxed lg:w-2/3 text-black-600">
             Feel free to reach out to us! Whether you have a question, feedback,
-            we'd love to hear from you.
+            we&apos;d love to hear from you.
           </p>
         </div>
 

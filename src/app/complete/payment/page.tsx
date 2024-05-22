@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import LoadingScreen from "react-loading-screen";
 import Checkout from "./checkout";
@@ -10,6 +10,15 @@ import BellCurve from "../chart/page";
 type PaymentStatusType = false | { paid: boolean; score: number };
 
 function PaymentPage() {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <PaymentComponent />
+    </Suspense>
+  );
+}
+
+function PaymentComponent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [showItem, setShowItem] = useState(false);
   const [hasPaid, setHasPaid] = useState<boolean>();
@@ -26,8 +35,6 @@ function PaymentPage() {
     console.log("Aciton exectured after 5 seconds");
     setLoading(() => false);
   }, 5000);
-
-  const searchParams = useSearchParams();
 
   const query: string = searchParams.get("userid") || "default-id";
 
