@@ -11,7 +11,7 @@ function Checkout({ amount }: { amount: string }) {
       return "http://localhost:3000/";
     } else {
       // Replace this with the production URL
-      return "https://qtink.com";
+      return "https://saas-cxrhit8fh-muaths-projects-637f5948.vercel.app";
     }
   };
 
