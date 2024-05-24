@@ -29,6 +29,7 @@ type emailContentType = {
 };
 
 export default async function sendEmail(options: EmailOptions) {
+  console.log("sending email....");
   let emailContent: emailContentType = {
     from: "onboarding@resend.dev",
     to: options.to || "muath.khalifa@yahoo.com",
@@ -72,6 +73,7 @@ export default async function sendEmail(options: EmailOptions) {
     console.error("Failed to send email", error);
     return { success: false, error };
   }
+  console.log("data: ", data);
 
   return { success: true, data };
 }

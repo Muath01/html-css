@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function createUser(email: string, score: number) {
-  console.log("in the create User function: ", score);
+  console.log("in the create User function: ", email);
 
   try {
     const user = await prisma.user.create({
@@ -16,6 +16,8 @@ export async function createUser(email: string, score: number) {
         second_name: "Khalifa",
         Gender: "M",
         salary_range: "20,000-30,000",
+        email_sent: false,
+        paid: false,
         score,
       },
     });
@@ -35,8 +37,6 @@ export async function upadeteEmailSent(userId: string) {
       email_sent: true,
     },
   });
-
-  console.log("user: ", user);
 }
 
 // returns is a boolean stating whethere an emailhas been sent to this user or not.
@@ -56,7 +56,6 @@ export async function emailIsSent(userId: string) {
     console.error("User not found:", userId);
     return false; // Assuming unpaid if user is not found
   }
-  console.log("user: -> ", user);
 
   return user.email_sent;
 }
@@ -80,8 +79,10 @@ export async function updateUserPaid(userId: string) {
   }
 }
 
+// returns false if user not found
+// returns object that has the state of whether user has paid or not.
 export async function personHasPaid(userId: string) {
-  console.log("erorr here: ", userId);
+  console.log("personaHasPaid Function: ", userId);
   const user = await prisma.user.findUnique({
     where: {
       id: userId,

@@ -115,7 +115,7 @@ function Test() {
     setStyling([...styling]);
   }
 
-  const mins = 60 * 0.1 * 1000;
+  const mins = 60 * 20 * 1000;
   const NOW_IN_MS = new Date().getTime();
   const [time, setTime] = useState<number>(0);
   //20 minutes

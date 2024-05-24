@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import React from "react";
 
 import { loadStripe } from "@stripe/stripe-js";
+import { getUserId } from "@/lib/getUserId";
 
 function Checkout({ amount }: { amount: string }) {
   const getSuccessURL = () => {
@@ -30,7 +31,8 @@ function Checkout({ amount }: { amount: string }) {
           // Add more line items if needed
         ],
         mode: "payment",
-        successUrl: `${getSuccessURL()}/complete/chart/`,
+        successUrl: `${getSuccessURL()}/complete/chart/${await getUserId()}`,
+        // successUrl: `${getSuccessURL()}/complete/success`,
         cancelUrl: `${getSuccessURL()}/complete/payment`,
       });
 

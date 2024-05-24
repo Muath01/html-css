@@ -5,7 +5,8 @@ import LoadingScreen from "react-loading-screen";
 import Checkout from "./checkout";
 import { useRouter, useSearchParams } from "next/navigation";
 import { personHasPaid } from "../../../../prisma";
-import BellCurve from "../chart/page";
+import BellCurve from "../chart/[id]/page";
+import { getUserId } from "@/lib/getUserId";
 
 type PaymentStatusType = false | { paid: boolean; score: number };
 
@@ -38,6 +39,8 @@ function PaymentComponent() {
 
   const query: string = searchParams.get("userid") || "default-id";
 
+  console.log("query:=> ", query);
+
   useEffect(() => {
     const UserHasPaid = async () => {
       const hasPaid: PaymentStatusType = await personHasPaid(query);
@@ -50,7 +53,7 @@ function PaymentComponent() {
       } else {
         setHasPaid(hasPaid.paid);
         setScore(hasPaid.score);
-        router.push("/complete/chart");
+        router.push(`/complete/chart/${await getUserId()}`);
       }
     };
 
@@ -83,13 +86,14 @@ function PaymentComponent() {
         </div>
       ) : status.showItem ? (
         <div>
+          <h1>hello</h1>
           <Checkout amount={status.productId} />
           {/* <StripeContainer amount={status.amount} /> */}
         </div>
       ) : hasPaid ? (
         () => {
           console.log("haspaid: ", hasPaid);
-          router.push("/complete/chart");
+          // router.push("/complete/chart");
         }
       ) : (
         <div className=" flex flex-col h-screen ">

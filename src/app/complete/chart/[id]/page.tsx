@@ -4,6 +4,9 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import bellcurve from "highcharts/modules/histogram-bellcurve";
 import highchartsBellCurve from "highcharts/modules/histogram-bellcurve";
+import { ImSpinner } from "react-icons/im";
+import { PiSpinnerGapThin } from "react-icons/pi";
+import { FiCommand } from "react-icons/fi";
 
 import { useEffect, useRef } from "react";
 import { useState } from "react";
@@ -12,13 +15,15 @@ import { useRouter } from "next/navigation";
 import sendEmail from "@/app/actions/sendEmail";
 import {
   emailIsSent,
+  personHasPaid,
   upadeteEmailSent,
   updateUserPaid,
-} from "../../../../prisma";
+} from "../../../../../prisma";
 import { title } from "process";
 import { data } from "@/lib/data";
 import { calculateIQScore } from "@/lib/calculateIQScore";
-
+import { getUserId } from "@/lib/getUserId";
+import "../spinner.css";
 interface Title {
   text: string;
   margin?: number; // 'margin' is optional
@@ -69,6 +74,7 @@ const BellCurve = () => {
   const [chartWidth, setChartWidth] = useState(600); //default
   const [roundedPercentage, setRoundedPercentage] = useState<string | number>();
   const [newArr, setNewArr] = useState<number[]>();
+  const [loading, setLoading] = useState(false);
 
   const testScoreMin: number = 0;
   const testScoreMax: number = 20;
@@ -76,6 +82,32 @@ const BellCurve = () => {
   const iqScoreMax: number = 128;
 
   const [chartOptions, setChartOptions] = useState<any>();
+
+  // useEffect(() => {
+  //   const protectRoute = async () => {
+  //     const userId = await getUserId();
+
+  //     if (!userId) return;
+
+  //     console.log("user i d: ", userId);
+  //     const paymentStatus = await personHasPaid(userId);
+
+  //     if (!paymentStatus) return;
+
+  //     console.log("here.... usef: ", paymentStatus.paid);
+
+  //     if (!paymentStatus.paid) {
+  //       router.push(`/complete/payment/?userid=${userId}`);
+
+  //       return;
+  //     }
+
+  //     setLoading(false);
+  //     console.log("passed return statement");
+  //   };
+
+  //   protectRoute();
+  // }, []);
 
   useEffect(() => {
     setChartOptions(() => {
