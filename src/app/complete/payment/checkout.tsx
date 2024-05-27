@@ -12,7 +12,7 @@ function Checkout({ amount }: { amount: string }) {
       return "http://localhost:3000/";
     } else {
       // Replace this with the production URL
-      return "qtink.com";
+      return "https://qtink.com";
     }
   };
 
