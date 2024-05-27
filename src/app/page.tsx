@@ -9,10 +9,13 @@ import Pricing from "@/components/Pricing";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { deleteAllUsers } from "../../prisma";
 export default function Home() {
   const pathname = usePathname();
 
   console.log("path: ", pathname);
+
   return (
     <>
       <Header />;

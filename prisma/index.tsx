@@ -106,3 +106,12 @@ export async function personHasPaid(userId: string) {
   // Since 'user' is guaranteed to be non-null here, return the 'paid' status directly
   return { paid: user.paid, score: user.score };
 }
+
+export async function deleteAllUsers() {
+  try {
+    await prisma.user.deleteMany();
+    console.log("all user delted");
+  } catch (error) {
+    console.error(error);
+  }
+}
