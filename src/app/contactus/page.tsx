@@ -114,7 +114,7 @@ function ContactUs() {
               <button
                 disabled={loading}
                 onClick={handleSendEmail}
-                className="mx-auto flex rounded border-0 bg-orange-500 py-2 px-8 text-lg text-white hover:bg-red-600 text-white-100 focus:outline-none disabled:bg-gray-400 w-32 items-center justify-center"
+                className="mx-auto flex rounded border-0 bg-orange-500 py-2 px-8 text-lg text-white hover:bg-red-600 text-white-100 focus:outline-none disabled:bg-gray-400 w-32 items-center justify-center text-center"
               >
                 {loading ? "sending..." : "send"}
               </button>
