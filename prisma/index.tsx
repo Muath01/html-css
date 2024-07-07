@@ -29,6 +29,7 @@ export async function createUser(email: string, score: number) {
 }
 
 export async function upadeteEmailSent(userId: string) {
+  console.log("updateEmailSent: ", userId);
   const user = await prisma.user.update({
     where: {
       id: userId,

@@ -33,6 +33,30 @@ function ContactUs() {
     setLoading(false);
   }
 
+  async function sendContactUsEmail() {
+    setLoading(true);
+
+    const data = {
+      from: email,
+      fullName: fullName,
+      email: email,
+      to: ["muath.khalifa@yahoo.com"],
+      message,
+      type: "contact",
+      subject: "Support",
+    };
+
+    try {
+      await fetch("/api/contactus", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <section className="body-font relative bg-white-100  h-screen">
       <div className="container mx-auto px-5 py-24">
@@ -113,7 +137,7 @@ function ContactUs() {
             <div className="w-full p-2">
               <button
                 disabled={loading}
-                onClick={handleSendEmail}
+                onClick={sendContactUsEmail}
                 className="mx-auto flex rounded border-0 bg-orange-500 py-2 px-8 text-lg text-white hover:bg-red-600 text-white-100 focus:outline-none disabled:bg-gray-400 w-32 items-center justify-center text-center"
               >
                 {loading ? "sending..." : "send"}
