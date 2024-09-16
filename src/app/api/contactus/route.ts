@@ -5,7 +5,7 @@ import { kv } from "@vercel/kv";
 
 const ratelimit = new Ratelimit({
   redis: kv,
-  limiter: Ratelimit.slidingWindow(1, "2 h"),
+  limiter: Ratelimit.slidingWindow(5, "2 h"),
 });
 
 export const config = {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     const data = await request.json();
 
-    // await sendEmail(data);
+    await sendEmail(data);
     console.log("dataxxx: ", data);
     return NextResponse.json({ hello: "post" });
   } catch (error) {

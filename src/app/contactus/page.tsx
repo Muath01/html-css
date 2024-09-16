@@ -47,10 +47,15 @@ function ContactUs() {
     };
 
     try {
-      await fetch("/api/contactus", {
+      const response = await fetch("/api/contactus", {
         method: "POST",
         body: JSON.stringify(data),
       });
+
+      console.log("response: ", response);
+      setMessage("");
+      setEmail("");
+      setFullName("");
       setLoading(false);
     } catch (error) {
       console.error(error);
