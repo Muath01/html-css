@@ -352,7 +352,7 @@ const BellCurve = () => {
 
         await upadeteEmailSent(userId);
       } else {
-        console.log("in the other one ");
+        console.log("email has been sent");
       }
     };
 

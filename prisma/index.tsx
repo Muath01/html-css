@@ -1,21 +1,26 @@
 "use server";
+import { FormData } from "@/app/complete/form/page";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function createUser(email: string, score: number) {
-  console.log("in the create User function: ", email);
+export async function createUser(data: FormData, score: number) {
+  console.log("in the create User function: ", data.email);
+
+  console.log("data create: ", data);
+
+  const age = data.age.toString();
 
   try {
     const user = await prisma.user.create({
       data: {
-        email: email,
-        country: "LY",
-        dob: "21-01-21",
-        first_name: "Muath",
-        second_name: "Khalifa",
-        Gender: "M",
-        salary_range: "20,000-30,000",
+        email: data.email,
+        country: data.country,
+        dob: age,
+        first_name: data.name,
+        second_name: data.name,
+        Gender: data.gender,
+        salary_range: data.salaryRange,
         email_sent: false,
         paid: false,
         score,
